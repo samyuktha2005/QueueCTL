@@ -1,0 +1,58 @@
+{
+    "jobs": {
+        "1": {
+            "id": "65dfe46a-4627-4cfd-924b-341256b5b162",
+            "command": "echo Hello",
+            "state": "pending",
+            "attempts": 0,
+            "max_retries": 3,
+            "created_at": "2025-11-07T14:04:48.091038",
+            "updated_at": "2025-11-07T14:04:48.091038"
+        },
+        "2": {
+            "id": "cd1ac5a5-d742-4ae2-b177-8b056a3c6b60",
+            "command": "{command: echo Hello World}",
+            "state": "pending",
+            "attempts": 0,
+            "max_retries": 3,
+            "created_at": "2025-11-07T14:06:03.255773",
+            "updated_at": "2025-11-07T14:06:03.255773"
+        },
+        "3": {
+            "id": "1a6cbfca-8654-42ad-ba07-cd9607d3c3c0",
+            "command": "{command: cd}",
+            "state": "pending",
+            "attempts": 0,
+            "max_retries": 3,
+            "created_at": "2025-11-07T14:06:43.933619",
+            "updated_at": "2025-11-07T14:06:43.933619"
+        },
+        "4": {
+            "id": "a47d5c0f-a5be-470c-953d-29d1c2ad007c",
+            "command": "cd",
+            "state": "pending",
+            "attempts": 0,
+            "max_retries": 3,
+            "created_at": "2025-11-07T14:07:35.149724",
+            "updated_at": "2025-11-07T14:07:35.149724"
+        },
+        "5": {
+            "id": "3154f532-9528-4a1e-9d09-37b09408b291",
+            "command": "echo Hello",
+            "state": "pending",
+            "attempts": 0,
+            "max_retries": 3,
+            "created_at": "2025-11-07T14:09:01.247580",
+            "updated_at": "2025-11-07T14:09:01.247580"
+        },
+        "6": {
+            "id": "5f7b2d4a-4cf6-4c55-95fe-45eab7d47e10",
+            "command": "ls",
+            "state": "pending",
+            "attempts": 0,
+            "max_retries": 5,
+            "created_at": "2025-11-07T14:17:40.621586",
+            "updated_at": "2025-11-07T14:17:40.621586"
+        }
+    }
+}
