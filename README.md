@@ -1,169 +1,234 @@
-🚀 QueueCTL — CLI-Based Job Queue System
+# 🚀 QueueCTL — CLI-Based Job Queue System
 
-A lightweight background job queue system built using Python, supporting multiple workers, persistent storage, retries with exponential backoff, and a Dead Letter Queue (DLQ).
+A lightweight background job queue system built using **Python**, supporting multiple workers, persistent storage, retries with exponential backoff, and a **Dead Letter Queue (DLQ)**.
 
-⚙️ Features
 
-✅ Enqueue and process background jobs
-✅ Multiple worker threads
-✅ Persistent storage via TinyDB
-✅ Automatic retry with exponential backoff
-✅ Dead Letter Queue for failed jobs
-✅ Configurable max retries and backoff base
-✅ Graceful worker shutdown
-✅ Cross-platform command execution (Windows compatible)
+---
 
-🧠 Architecture Overview
-Job Lifecycle
-State	Description
-pending	Job is waiting to be picked up by a worker
-processing	Worker is executing the job
-completed	Successfully executed
-failed	Retryable failure occurred
-dead	Moved to DLQ after max retries
-Components
-File	Purpose
-queuectl.py	CLI interface using click
-jobs.py	Job model, persistence, CRUD
-worker.py	Worker thread logic, retries, DLQ handling
-config.py	Config management for retries/backoff
-jobs.json	Persistent TinyDB storage
-🧩 Setup Instructions
-Prerequisites
+## ⚙️ Features
 
-Python 3.8 or later
+- ✅ Enqueue and process background jobs  
+- ✅ Multiple worker threads  
+- ✅ Persistent storage via TinyDB  
+- ✅ Automatic retry with exponential backoff  
+- ✅ Dead Letter Queue for failed jobs  
+- ✅ Configurable max retries and backoff base  
+- ✅ Graceful worker shutdown  
+- ✅ Cross-platform command execution (Windows compatible)
 
-pip install tinydb click
+---
 
-Clone the Repository
-git clone https://github.com/Samyuktha2005/QueueCTL.git
+## 🧠 Architecture Overview
+
+### Job Lifecycle
+
+| State        | Description                                |
+| ------------ | ------------------------------------------ |
+| `pending`    | Job is waiting to be picked up by a worker |
+| `processing` | Worker is executing the job                |
+| `completed`  | Successfully executed                      |
+| `failed`     | Retryable failure occurred                 |
+| `dead`       | Moved to DLQ after max retries             |
+
+### Components
+
+| File          | Purpose                                    |
+| ------------- | ------------------------------------------ |
+| `queuectl.py` | CLI interface using `click`                |
+| `jobs.py`     | Job model, persistence, CRUD               |
+| `worker.py`   | Worker thread logic, retries, DLQ handling |
+| `config.py`   | Config management for retries/backoff      |
+| `jobs.json`   | Persistent TinyDB storage                  |
+
+---
+
+## 🧩 Setup Instructions
+
+### Prerequisites
+
+* Python 3.8 or later
+* `pip install tinydb click`
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/samyuktha2005/QueueCTL.git
 cd QueueCTL
+```
 
-Install Dependencies
+### Install Dependencies
+
+```bash
 pip install -r requirements.txt
+```
+---
 
+## 💻 Usage Examples
 
-💻 Usage Examples
-1️⃣ Enqueue a Job
+### **1️⃣ Enqueue a Job**
+
+```bash
 python queuectl.py --% enqueue "{\"command\": \"timeout /t 5\"}"
+```
 
-
-(Windows)
+*(Windows)*
 
 or on Linux/macOS:
 
-python queuectl.py enqueue "{\"command\": \"sleep 5\"}"
+```bash
+python queuectl.py --% enqueue "{\"command\": \"sleep 5\"}"
+```
 
-2️⃣ Start Workers
+### **2️⃣ Start Workers**
+
+```bash
 python queuectl.py worker start --count 2
-
+```
 
 Starts 2 worker threads to process jobs concurrently.
 
-3️⃣ Check Status
-python queuectl.py status
+### **3️⃣ Check Status**
 
+```bash
+python queuectl.py status
+```
 
 Shows summary of jobs by state (pending, completed, etc.)
 
-4️⃣ List Jobs
+### **4️⃣ List Jobs**
+
+```bash
 python queuectl.py list --state completed
+```
 
-5️⃣ View DLQ
+### **5️⃣ View DLQ**
+
+```bash
 python queuectl.py dlq list
+```
 
-6️⃣ Retry a DLQ Job
+### **6️⃣ Retry a DLQ Job**
+
+```bash
 python queuectl.py dlq retry <job_id>
+```
 
-7️⃣ Stop Workers
+### **7️⃣ Stop Workers**
 
-Press Ctrl+C or use:
+Press `Ctrl+C` or use:
 
+```bash
 python queuectl.py worker stop
+```
 
-🧪 Testing Instructions (for 10% marks)
+---
+
+## 🧪 Testing Instructions (for 10% marks)
 
 Use the following scenarios to validate all requirements.
 
-✅ Scenario 1: Basic Job Success
-python queuectl.py enqueue "{\"command\": \"timeout /t 3\"}"
+### ✅ **Scenario 1: Basic Job Success**
+
+```bash
+python queuectl.py --% enqueue "{\"command\": \"timeout /t 3\"}"
 python queuectl.py worker start --count 1
+```
 
+**Expected:**
+Job transitions: `pending → processing → completed`
 
-Expected:
-Job transitions: pending → processing → completed
+---
 
-✅ Scenario 2: Failed Job Retries and DLQ
+### ✅ **Scenario 2: Failed Job Retries and DLQ**
+
+```bash
 python queuectl.py --% enqueue "{\"command\": \"invalidcmd\"}"
 python queuectl.py worker start --count 1
+```
 
+**Expected:**
 
-Expected:
+* Job fails → retries with exponential backoff (2s, 4s, 8s, …)
+* After max retries → moved to `DLQ`
 
-Job fails → retries with exponential backoff (2s, 4s, 8s, …)
+---
 
-After max retries → moved to DLQ
+### ✅ **Scenario 3: Multiple Workers (Parallel Execution)**
 
-✅ Scenario 3: Multiple Workers (Parallel Execution)
-python queuectl.py enqueue "{\"command\": \"timeout /t 5\"}"
-python queuectl.py enqueue "{\"command\": \"timeout /t 5\"}"
+```bash
+python queuectl.py --% enqueue "{\"command\": \"timeout /t 5\"}"
+python queuectl.py --% enqueue "{\"command\": \"timeout /t 5\"}"
 python queuectl.py worker start --count 2
+```
 
+**Expected:**
+Both jobs run **in parallel** on different workers.
 
-Expected:
-Both jobs run in parallel on different workers.
+---
 
-✅ Scenario 4: Persistence
+### ✅ **Scenario 4: Persistence**
 
-Enqueue jobs.
+1. Enqueue jobs.
+2. Stop program (`Ctrl+C`).
+3. Restart workers with:
 
-Stop program (Ctrl+C).
+   ```bash
+   python queuectl.py worker start --count 1
+   ```
 
-Restart workers with:
-
-python queuectl.py worker start --count 1
-
-
-Expected:
+**Expected:**
 Pending jobs are picked up and completed. No jobs lost between restarts.
 
-✅ Scenario 5: Invalid Command Handling
-python queuectl.py enqueue "{\"command\": \"foobar123\"}"
+---
+
+### ✅ **Scenario 5: Invalid Command Handling**
+
+```bash
+python queuectl.py --% enqueue "{\"command\": \"foobar123\"}"
 python queuectl.py worker start --count 1
+```
 
-
-Expected:
+**Expected:**
 Job fails gracefully → retries → DLQ.
 
-📊 Configuration
-Config	Description	Default
-max_retries	Max number of attempts before DLQ	3
-backoff_base	Base for exponential delay (2^attempts)	2
-Update Config
+---
+
+## 📊 Configuration
+
+| Config         | Description                             | Default |
+| -------------- | --------------------------------------- | ------- |
+| `max_retries`  | Max number of attempts before DLQ       | 3       |
+| `backoff_base` | Base for exponential delay (2^attempts) | 2       |
+
+### Update Config
+
+```bash
 python queuectl.py config set max_retries 5
 python queuectl.py config set backoff_base 3
+```
 
-🧱 Assumptions & Trade-offs
+---
 
-Only one worker thread executes a single job at a time (no overlap).
+## 🧱 Assumptions & Trade-offs
 
-Jobs execute shell commands (no sandboxing for now).
+* Only one worker thread executes a single job at a time (no overlap).
+* Jobs execute shell commands (no sandboxing for now).
+* TinyDB provides persistence without external DB.
+* Workers perform **graceful shutdowns** (finish current job before stopping).
 
-TinyDB provides persistence without external DB.
+---
 
-Workers perform graceful shutdowns (finish current job before stopping).
+## 🧠 Bonus Ideas
 
-🧠 Bonus Ideas
+* Add job scheduling with `run_at`
+* Add priority queues
+* Add job output logging to file
+* Add simple monitoring dashboard (Flask UI)
 
-Add job scheduling with run_at
 
-Add priority queues
+## 🧾 Author
 
-Add job output logging to file
+-**Samyuktha Jaggaiahgari**
+-Python Developer — QueueCTL CLI System
 
-Add simple monitoring dashboard (Flask UI)
-
-🧾 Author
-
-Samyuktha Jaggaiahgari
-Python Developer — QueueCTL CLI System
+---
