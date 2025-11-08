@@ -1,58 +1,87 @@
 {
     "jobs": {
         "1": {
-            "id": "65dfe46a-4627-4cfd-924b-341256b5b162",
-            "command": "echo Hello",
-            "state": "pending",
-            "attempts": 0,
-            "max_retries": 3,
-            "created_at": "2025-11-07T14:04:48.091038",
-            "updated_at": "2025-11-07T14:04:48.091038"
-        },
-        "2": {
-            "id": "cd1ac5a5-d742-4ae2-b177-8b056a3c6b60",
-            "command": "{command: echo Hello World}",
-            "state": "pending",
-            "attempts": 0,
-            "max_retries": 3,
-            "created_at": "2025-11-07T14:06:03.255773",
-            "updated_at": "2025-11-07T14:06:03.255773"
-        },
-        "3": {
-            "id": "1a6cbfca-8654-42ad-ba07-cd9607d3c3c0",
-            "command": "{command: cd}",
-            "state": "pending",
-            "attempts": 0,
-            "max_retries": 3,
-            "created_at": "2025-11-07T14:06:43.933619",
-            "updated_at": "2025-11-07T14:06:43.933619"
-        },
-        "4": {
-            "id": "a47d5c0f-a5be-470c-953d-29d1c2ad007c",
-            "command": "cd",
-            "state": "pending",
-            "attempts": 0,
-            "max_retries": 3,
-            "created_at": "2025-11-07T14:07:35.149724",
-            "updated_at": "2025-11-07T14:07:35.149724"
-        },
-        "5": {
-            "id": "3154f532-9528-4a1e-9d09-37b09408b291",
-            "command": "echo Hello",
-            "state": "pending",
-            "attempts": 0,
-            "max_retries": 3,
-            "created_at": "2025-11-07T14:09:01.247580",
-            "updated_at": "2025-11-07T14:09:01.247580"
-        },
-        "6": {
-            "id": "5f7b2d4a-4cf6-4c55-95fe-45eab7d47e10",
-            "command": "ls",
-            "state": "pending",
+            "id": "877fcb01-4c91-45fb-a361-b4b01b820dca",
+            "command": "echo manngine",
+            "state": "completed",
             "attempts": 0,
             "max_retries": 5,
-            "created_at": "2025-11-07T14:17:40.621586",
-            "updated_at": "2025-11-07T14:17:40.621586"
+            "created_at": "2025-11-07T15:05:26.840616",
+            "updated_at": "2025-11-07T15:05:44.827386"
+        },
+        "2": {
+            "id": "b0770696-8b4a-4b9f-8b9e-01572c777cf6",
+            "command": "echo Job1",
+            "state": "completed",
+            "attempts": 0,
+            "max_retries": 5,
+            "created_at": "2025-11-07T15:10:27.112905",
+            "updated_at": "2025-11-07T15:10:49.325086"
+        },
+        "3": {
+            "id": "2e6e012e-6217-4aa9-a91d-7666d53f5064",
+            "command": "echo Job2",
+            "state": "completed",
+            "attempts": 0,
+            "max_retries": 5,
+            "created_at": "2025-11-07T15:10:27.250586",
+            "updated_at": "2025-11-07T15:10:49.325156"
+        },
+        "4": {
+            "id": "0da5b3f9-83d2-43bd-b9cb-53ba960cabc4",
+            "command": "timeout /t 5 /nobreak",
+            "state": "completed",
+            "attempts": 0,
+            "max_retries": 5,
+            "created_at": "2025-11-07T15:14:32.906770",
+            "updated_at": "2025-11-07T15:16:35.156950"
+        },
+        "5": {
+            "id": "5f6bdefa-9ff9-489c-b2d2-71d43e8294b7",
+            "command": "timeout /t 3",
+            "state": "completed",
+            "attempts": 0,
+            "max_retries": 5,
+            "created_at": "2025-11-07T15:16:30.053494",
+            "updated_at": "2025-11-07T15:16:33.123882"
+        },
+        "6": {
+            "id": "485602d9-7cc9-41e7-9d95-5d4056ff5e3b",
+            "command": "timeout /t 5",
+            "state": "completed",
+            "attempts": 0,
+            "max_retries": 5,
+            "created_at": "2025-11-07T15:16:30.195998",
+            "updated_at": "2025-11-07T15:16:38.149381"
+        },
+        "7": {
+            "id": "f6e971c2-bc89-4815-af21-e8c7f05c5859",
+            "command": "timeout /t 3",
+            "state": "completed",
+            "attempts": 0,
+            "max_retries": 5,
+            "created_at": "2025-11-08T15:49:43.975963",
+            "updated_at": "2025-11-08T15:49:47.208552"
+        },
+        "8": {
+            "id": "bd0070b8-1754-4a61-8aaa-bd11d3ad57ea",
+            "command": "timeout /t 5",
+            "state": "completed",
+            "attempts": 0,
+            "max_retries": 5,
+            "created_at": "2025-11-08T15:49:44.337194",
+            "updated_at": "2025-11-08T15:49:49.197015"
+        }
+    },
+    "dlq": {
+        "9": {
+            "id": "e3f2e8c8-cd13-4dcf-9599-a3cf96eb6903",
+            "command": "invalidcmd",
+            "state": "dead",
+            "attempts": 6,
+            "max_retries": 5,
+            "created_at": "2025-11-08T15:50:52.959223",
+            "updated_at": "2025-11-08T15:51:55.755543"
         }
     }
 }
